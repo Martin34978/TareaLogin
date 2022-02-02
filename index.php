@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -20,45 +20,68 @@
             <td>Salario</td>
         </tr>
         <?php
+        /*Desactivamos el reporte de errores para que no muestre los warnings
+        que saltan cuando hay algún dato erroneo y hace el array_push con un array vacio*/
+        error_reporting(0);
+        include 'funciones.php';
         $empleados = array (
-            array("dnifalso1","Maria de las Mercedes", "25", "Programadora", "PHP", 5, 2000),
-            array("dnifalso2","Eduado Fernandez Solís", 25, "Programadora", "PHP", 5, 2000),
-            array("dnifalso3","Isabel Castilla", 25, "Programadora", "PHP", 5, 2000),
-            array("dnifalso4","Carlos Santana", 25, "Programadora", "PHP", 5, 2000)
+            array("34073511T","Maria de las Mercedes", "25", "Programadora", "PHP", 5, 2000),
+            array("47562647G","Eduado Fernandez Solís", 25, "Programadora", "PHP", 5, 2000),
+            array("47345882Z","Isabel Castilla", 25, "Programadora", "PHP", 5, 2000),
+            array("47562647G","Carlos Santana", 25, "Programadora", "PHP", 5, 2000)
         );
 
-        for ($row = 0; $row < 4; $row++) {
-            echo "<tr>";
-            for ($col = 0; $col < 7; $col++) {
-              echo "<td>".$empleados[$row][$col]."</td>";
-            }
-            echo "</tr>";
-          }
+        if(isset($_POST["anadir"])){
+            array_push($empleados, anadirArray());
+        }
+
+        if(isset($_POST['modificar'])){
+            $dniObjetivo = $_POST['dni'];
+            $empleados = modificarArray($dniObjetivo, $empleados);
+        }
+
+        if(isset($_POST['borrar'])){
+            $dniObjetivo = $_POST['dni'];
+            $empleados = eliminarArray($dniObjetivo, $empleados);
+        }
+
+        mostrarArray($empleados);
         ?>
         </tbody>
     </table>
     <h3><strong>Gestión de Empleados</strong></h3>
+    
+    <form method="POST" action= <?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>>
     <table border="1">
         <tr>
-            <td><a href="index.php">Añadir</a></td>
-            <td>Modificar</td>
-            <td>Borrar</td>
+            <td><input type="submit" method="POST" name="anadir" value="Añadir"></td>
+            <td><input type="submit" method="POST" name="modificar" value="Modificar"></td>
+            <td><input type="submit" method="POST" name="borrar" value="Borrar"></td>
         </tr>
     </table>
     <div>
-        <form method="POST" action= <?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>>
-            <label>DNI: <input type="text" name="dni" /></label><br>
-            <label>Nombre: <input type="text" name="nombre" /></label><br>
-            <label>Apellidos: <input type="text" name="apellidos" /></label><br>
-            <label>Edad: <input type="text" name="edad" /></label><br>
+            <label>DNI: <input type="text" name="dni" maxlength="9" pattern="[0-9]{8}[A-Za-z]{1}" title="Debe poner 8 números y una letra" required/></label><br>
+            <label>Nombre: <input type="text" name="nombre"  /></label><br>
+            <label>Apellidos: <input type="text" name="apellidos"  /></label><br>
+            <label>Edad: <input type="num" name="edad" maxlength="2" pattern="[0-9]{1-2}" /></label><br>
             <label>Puesto: <input type="text" name="puesto" /></label><br>
-            <label>Antigüedad: <input type="text" name="antiguedad" /></label><br>
-            <label>Salario: <input type="text" name="salario" /></label>
+            <label>Subuesto: <input type="text" name="subpuesto" /></label><br>
+            <label>Antigüedad: <input type="text" name="antiguedad" maxlength="2" pattern="[0-9]{1-2}" /></label><br>
+            <label>Salario: <input type="text" name="salario" maxlength="8" pattern="[0-9]{4-8}" /></label>
         </form>
     </div>
     <div>
         <p>===========================MENSAJES====================================</p>
         
+        <?php 
+        if(isset($_POST["anadir"])){
+            gestorErrores();
+            
+        }
+        if(isset($_POST["modificar"])){
+            gestorErrores();
+        }
+        ?>
     </div>
 </body>
 </html>
