@@ -4,10 +4,21 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
     <title>Prueba Práctica</title>
 </head>
 <body>
+    <?php
+        if(!isset($_COOKIE['arrayEmpleados'])){
+            $empleados = array (
+                array("34073511T","Maria de las Mercedes", "25", "Programadora", "PHP", 5, 2000),
+                array("47562647G","Eduado Fernandez Solís", 25, "Programadora", "PHP", 5, 2000),
+                array("47345882Z","Isabel Castilla", 25, "Programadora", "PHP", 5, 2000),
+                array("47562647G","Carlos Santana", 25, "Programadora", "PHP", 5, 2000)
+            );
+            setcookie('arrayEmpleados', json_encode($empleados), time()+3600);
+            header("location:index.php");
+        }    
+    ?>
     <table border='1'>
         <tbody>
         <tr>
@@ -22,27 +33,28 @@
         <?php
         /*Desactivamos el reporte de errores para que no muestre los warnings
         que saltan cuando hay algún dato erroneo y hace el array_push con un array vacio*/
-        error_reporting(0);
+        //error_reporting(0);
         include 'funciones.php';
-        $empleados = array (
-            array("34073511T","Maria de las Mercedes", "25", "Programadora", "PHP", 5, 2000),
-            array("47562647G","Eduado Fernandez Solís", 25, "Programadora", "PHP", 5, 2000),
-            array("47345882Z","Isabel Castilla", 25, "Programadora", "PHP", 5, 2000),
-            array("47562647G","Carlos Santana", 25, "Programadora", "PHP", 5, 2000)
-        );
+        $empleados = json_decode($_COOKIE['arrayEmpleados'], true);
 
         if(isset($_POST["anadir"])){
             array_push($empleados, anadirArray());
+            setcookie('arrayEmpleados', json_encode($empleados), time()+3600);
+
         }
 
         if(isset($_POST['modificar'])){
             $dniObjetivo = $_POST['dni'];
             $empleados = modificarArray($dniObjetivo, $empleados);
+            setcookie('arrayEmpleados', json_encode($empleados), time()+3600);
+
         }
 
         if(isset($_POST['borrar'])){
             $dniObjetivo = $_POST['dni'];
             $empleados = eliminarArray($dniObjetivo, $empleados);
+            setcookie('arrayEmpleados', json_encode($empleados), time()+3600);
+
         }
 
         mostrarArray($empleados);
