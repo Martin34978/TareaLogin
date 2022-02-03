@@ -10,10 +10,10 @@
     <?php
         if(!isset($_COOKIE['arrayEmpleados'])){
             $empleados = array (
-                array("34073511T","Maria de las Mercedes", "25", "Programadora", "PHP", 5, 2000),
-                array("47562647G","Eduado Fernandez Solís", 25, "Programadora", "PHP", 5, 2000),
-                array("47345882Z","Isabel Castilla", 25, "Programadora", "PHP", 5, 2000),
-                array("47562647G","Carlos Santana", 25, "Programadora", "PHP", 5, 2000)
+                array("34073511T","Maria de las Mercedes", 45, "Programador", "Web", 5, 2000),
+                array("47562647G","Eduado Fernandez Solís", 25, "Analista", "Tecnico", 5, 2000),
+                array("47345882Z","Isabel Castilla", 31, "Programador", "Multiplataforma", 5, 2000),
+                array("47562647G","Carlos Santana", 21, "Programador", "Web", 5, 2000)
             );
             setcookie('arrayEmpleados', json_encode($empleados), time()+3600);
             header("location:index.php");
@@ -33,7 +33,7 @@
         <?php
         /*Desactivamos el reporte de errores para que no muestre los warnings
         que saltan cuando hay algún dato erroneo y hace el array_push con un array vacio*/
-        //error_reporting(0);
+        error_reporting(0);
         include 'funciones.php';
         $empleados = json_decode($_COOKIE['arrayEmpleados'], true);
 
