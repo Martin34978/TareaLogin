@@ -1,5 +1,10 @@
-#loginContent,
-#signupContent {
-  float: left;
-  width: 50%;
+.horizontal-container{
+    display: flex;
+  }
+.flex{
+    flex-grow:1;
+    padding: 10%;
+  }
+.noDecoration{
+    text-decoration: none;
 }
