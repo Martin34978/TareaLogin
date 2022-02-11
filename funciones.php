@@ -244,4 +244,30 @@ function gestorErrores(){
     echo '<p style="color:#FF0000";>El salario es incorrecto</p>';
   }
 }
+
+function consultaSQL($username, $passwd){
+  $host = "127.0.0.1";
+  $dbname = "login";
+  $username = "root";
+  $sql = "SELECT * FROM usuario WHERE username='".$username."'"."AND passwd='".$passwd."'";;
+  
+      try {
+          $conn = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username);
+          $busqueda = $conn->query($sql);
+          $arrDatos = $busqueda->fetchAll(PDO::FETCH_ASSOC);       
+      } catch (PDOException $e) {
+          die("No se pudo conectar con $dbname :" . $e->getMessage());
+      }  
+      
+      //Si la consulta no encuentra nada, devuelve un array vacío
+      if(empty($arrDatos)){
+        return false;
+      }else{
+        return true;
+      }
+      $conn->closeCursor();
+      $conn = null;
+      $busqueda = null;  
+  }
+  
 ?>

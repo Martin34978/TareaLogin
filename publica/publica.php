@@ -3,21 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="../css/styles.css">
     <title>Zona Pública</title>
 </head>
 <body>
     
 <?php
-        if(!isset($_COOKIE['arrayEmpleados'])){
-            $empleados = array (
-                array("34073511T","Maria de las Mercedes", 45, "Programador", "Web", 5, 2000),
-                array("47562647G","Eduado Fernandez Solís", 25, "Analista", "Tecnico", 5, 2000),
-                array("47345882Z","Isabel Castilla", 31, "Programador", "Multiplataforma", 5, 2000),
-                array("47562647G","Carlos Santana", 21, "Programador", "Web", 5, 2000)
-            );
-            setcookie('arrayEmpleados', json_encode($empleados), time()+3600);
-            header("location:publica.php");
-        }    
+   
     ?>
     <table border='1'>
         <tbody>
