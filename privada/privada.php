@@ -23,7 +23,14 @@
     if(isset($_POST['rUsername'])){
         $_SESSION['auth'] = 1;
     }
+
+    $_COOKIE['ultimaCon'] = date('c'); 
     ?>
+    <div>
+        Ha iniciado sesión como <strong><?php echo "$username" ?></strong>, <a href="logoff.php"><strong>¿Cerrar sesión?</strong></a>
+        <br>
+        Su última conexión fue el <?php echo $_COOKIE['ultimaCon'] ?>
+    </div>
     <table border='1'>
         <tbody>
         <tr>
@@ -80,6 +87,11 @@
             <label>Antigüedad: <input type="text" name="antiguedad" maxlength="2" pattern="[0-9]{1-2}" /></label><br>
             <label>Salario: <input type="text" name="salario" maxlength="8" pattern="[0-9]{4-8}" /></label>
         </form>
+    </div>
+    <div>
+        <select name="tamanioBorder">
+            
+        </select>
     </div>
     <div>
         <p>===========================MENSAJES====================================</p>

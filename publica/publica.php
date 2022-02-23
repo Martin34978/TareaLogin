@@ -11,7 +11,7 @@
 <?php
    
     ?>
-    <table border='1'>
+    <table border='3'>
         <tbody>
         <tr>
             <th>DNI</th>
